@@ -1,0 +1,20 @@
+@import '~antd/dist/antd.css';
+@import './styles/variable.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    font-family: helvetica, arial, verdana, sans-serif, 'FontAwesome';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.ant-btn-primary {
+    background: #1890ff;
+}

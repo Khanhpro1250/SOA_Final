@@ -1,0 +1,47 @@
+import capitalize from 'capitalize';
+import readNumber from 'read-vn-number';
+import list from 'vn-badwords';
+import { queryStringSerialize } from '~/lib/axios';
+
+export default class LocaleUtil {
+    static ignoreSensitive = (input: string) => {
+        input = input.toLowerCase();
+        input = input.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
+        input = input.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
+        input = input.replace(/ì|í|ị|ỉ|ĩ/g, 'i');
+        input = input.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, 'o');
+        input = input.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u');
+        input = input.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y');
+        input = input.replace(/đ/g, 'd');
+        input = input.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, '');
+        input = input.replace(/\u02C6|\u0306|\u031B/g, '');
+        return input;
+    };
+
+    static compareTwoStringWithoutLocale = (source: string, target: string): boolean => {
+        return this.ignoreSensitive(source) === this.ignoreSensitive(target);
+    };
+
+    static includesWithoutLocate = (source: string, target: string): boolean => {
+        return this.ignoreSensitive(source).includes(this.ignoreSensitive(target));
+    };
+
+    static toLocaleString = (number: number) => number.toLocaleString();
+
+    static numberToText = (number: string | number) => {
+        const value = Number(number);
+        if (!Number.isInteger(value)) return '';
+        const prefix = value < 0 ? 'Âm ' : '';
+        const abs = Math.abs(value);
+        return capitalize(prefix + readNumber(abs));
+    };
+
+    static isContainsBadWords = (obj: object) => {
+        for (const [key, value] of Object.entries(obj)) {
+            if (typeof value !== 'string') continue;
+            if (list.regexp.test(value.toLowerCase())) return true;
+        }
+        
+        return false;
+    };
+}

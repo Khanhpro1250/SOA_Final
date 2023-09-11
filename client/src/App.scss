@@ -1,0 +1,24 @@
+.ant-image-preview-root {
+    .ant-image-preview-wrap {
+        .ant-image-preview-content {
+            .ant-image-preview-body {
+                .ant-image-preview-img-wrapper {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}
+
+.ant-image-mask {
+    background-color: transparent;
+    cursor: zoom-in;
+    .ant-image-mask-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: transparent;
+    }
+}
